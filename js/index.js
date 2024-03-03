@@ -1,6 +1,5 @@
 const play = document.getElementById('play');
 const choices = ['green', 'red', 'yellow', 'blue'];
-const randomChoice = choices[Math.floor(Math.random() * choices.length)]; 
 const tiles = document.querySelectorAll('.tile');
 const active = document.querySelector('.unclickable');
 let pattern = [];
@@ -15,9 +14,13 @@ play.addEventListener('click', function(){
 )
 
 function generatePattern(){
+    let randomChoice = choices[Math.floor(Math.random() * choices.length)]; 
     pattern.push(randomChoice);
-    console.log(randomChoice);
+    console.log('new input cmp: '+ randomChoice)
+    console.log('new pattern: ' + pattern)
     clicksCounter = 0;
+    userPattern = []
+    active.classList.remove('unclickable');
     
     //CHANGE TO LIGHT ON TILE
 }
@@ -27,42 +30,50 @@ function saveUserPattern(){
         const tile = tiles[i];
         tile.addEventListener('click', function(){
             userPattern.push(tile.dataset.tile);
-            console.log(userPattern);
             clicksCounter += 1;
-            console.log(clicksCounter);
-            console.log(pattern.length);
             if (clicksCounter == pattern.length){
-                console.log('if');
                 active.classList.add('unclickable');
                 main();
             }
         })
     }   
 }
-saveUserPattern()
 
-//active.classList.remove('unclickable');
+
+saveUserPattern();
+
 function main(){
-    console.log('main');
-    console.log(pattern)
-    console.log(userPattern)
-    if(userPattern == pattern){
-        console.log('ho');
-        counter += 1;
-        generatePattern();
-        
-
-        if(counter == 12){
-            alert('Congrats! You won at Simon says');
-        }
-        else{
-            alert('Oh oh! you missed');
-            //RESET THE GAME
-        }
+    if(counter == 12){
+        alert('Congrats! You won at Simon says');
+        return;
     }
     
+    for (let i=0; i<pattern.length; i++){
+        console.log('user pattern i: ' + userPattern[i])
+        console.log('pattern i: ' + pattern[i])
+        console.log('counter: ' + counter)
+
+        if(userPattern[i] != pattern[i]){
+            console.log('player input: '+ userPattern);
+            alert('Oh oh! you missed'); 
+            //reset game
+            return 
+        }
+    }
+    if(counter==12){
+        alert('Congrats! You won Simon says')
+    }
+    else{
+        counter += 1;
+        generatePattern()
+    }
 
 }
+
+
+    
+
+
 
 
 
