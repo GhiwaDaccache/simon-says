@@ -2,16 +2,21 @@ const play = document.getElementById('play');
 const choices = ['green', 'red', 'yellow', 'blue'];
 const tiles = document.querySelectorAll('.tile');
 const active = document.querySelector('.unclickable');
+let level = document.getElementById('level');
+let highScore = document.getElementById('high-score');
+
 let pattern = [];
 let userPattern = [];
 let counter = 1;
 let clicksCounter = 0;
+
 
 function reset(){
     pattern = [];
     userPattern = [];
     counter = 1;
     clicksCounter = 0;
+    level.innerHTML = 0;
 }
 
 
@@ -61,12 +66,17 @@ function main(){
             return 
         }
     }
-    if(counter==2){
+    if(counter==12){
         alert('Congrats! You won Simon says')
         reset()
         return
     }
     else{
+        level.innerHTML = counter; 
+
+        if(highScore.innerHTML < level.innerHTML){
+            highScore.innerHTML = counter;
+        }
         counter += 1;
         generatePattern()
     }
