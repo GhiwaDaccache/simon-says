@@ -4,8 +4,16 @@ const tiles = document.querySelectorAll('.tile');
 const active = document.querySelector('.unclickable');
 let pattern = [];
 let userPattern = [];
-let counter = 0;
+let counter = 1;
 let clicksCounter = 0;
+
+function reset(){
+    pattern = [];
+    userPattern = [];
+    counter = 1;
+    clicksCounter = 0;
+}
+
 
 play.addEventListener('click', function(){
     active.classList.remove('unclickable');
@@ -42,26 +50,21 @@ function saveUserPattern(){
 
 saveUserPattern();
 
+
+
 function main(){
-    if(counter == 12){
-        alert('Congrats! You won at Simon says');
-        return;
-    }
-    
     for (let i=0; i<pattern.length; i++){
-        console.log('user pattern i: ' + userPattern[i])
-        console.log('pattern i: ' + pattern[i])
-        console.log('counter: ' + counter)
 
         if(userPattern[i] != pattern[i]){
-            console.log('player input: '+ userPattern);
             alert('Oh oh! you missed'); 
-            //reset game
+            reset()
             return 
         }
     }
-    if(counter==12){
+    if(counter==2){
         alert('Congrats! You won Simon says')
+        reset()
+        return
     }
     else{
         counter += 1;
